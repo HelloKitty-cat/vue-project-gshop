@@ -14,9 +14,6 @@
   }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
-  html
-    height 100%
-    width 100%
-    background pink
+<style lang="stylus" rel="stylesheet/stylus" scoped>
+
 </style>
