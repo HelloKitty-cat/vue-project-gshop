@@ -5,6 +5,10 @@ import Search from '../pages/Search/Search'
 import Order from '../pages/Order/Order'
 import Profile from '../pages/Profile/Profile'
 import Login from '../pages/Login/Login'
+import Shops from '../pages/Shops/Shops'
+import ShopGoods from '../pages/Shops/ShopGoods/ShopGoods'
+import ShopRatings from '../pages/Shops/ShopRatings/ShopRatings'
+import ShopInfo from '../pages/Shops/ShopInfo/ShopInfo'
 Vue.use(VueRouter);
 
 export default new VueRouter({
@@ -41,6 +45,28 @@ export default new VueRouter({
     {
       path: '/login',
       component: Login
+    },
+    {
+      path: '/shops',
+      component: Shops,
+      children: [
+        {
+          path: '/shops/goods',
+          component: ShopGoods
+        },
+        {
+          path: '/shops/ratings',
+          component: ShopRatings
+        },
+        {
+          path: '/shops/info',
+          component: ShopInfo
+        },
+        {
+          path: '',
+          redirect: '/shops/goods'
+        }
+      ]
     },
     {
       path: '/',

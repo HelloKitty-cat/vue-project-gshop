@@ -4,7 +4,9 @@
 import {
   RECEIVE_ADDRESS,
   RECEIVE_CATEGORYS,
-  RECEIVE_SHOPS
+  RECEIVE_SHOPS,
+  RECEIVE_USERS,
+  RESET_USERS
 } from './mutations-Types'
 
 export default {
@@ -16,5 +18,11 @@ export default {
   },
   [RECEIVE_SHOPS] (state,{shops}) {
     state.shops = shops
+  },
+  [RECEIVE_USERS] (state,{users}) {
+    state.users = users
+  },
+  [RESET_USERS] (state) {
+    state.users = {}
   }
 }
