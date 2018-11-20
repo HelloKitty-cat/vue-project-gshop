@@ -12,8 +12,7 @@
       FooterGuide
     },
     mounted () {
-      this.$store.dispatch('getAddress');
-      this.$store.dispatch('getUserInfo');
+      this.$store.dispatch('getAddress')
     }
   }
 </script>

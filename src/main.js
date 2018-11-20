@@ -7,6 +7,7 @@ import {Button} from 'mint-ui'
 
 Vue.component('MainHeader',MainHeader);
 Vue.component(Button.name,Button);
+import './mock/mockServer.js'
 
 new Vue({
   el: '#app',

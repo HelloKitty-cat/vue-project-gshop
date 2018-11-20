@@ -6,7 +6,7 @@
         <span class="header_search" slot="left">
           <i class="iconfont icon-sousuo"></i>
         </span>
-        <span class="header_login" slot="right">
+        <span class="header_login" slot="right" v-show="!users._id">
           <span class="header_login_text">登录|注册</span>
         </span>
       </MainHeader>
@@ -55,7 +55,7 @@
       this.$store.dispatch('getShops')
     },
     computed: {
-      ...mapState(['address','categorys']),
+      ...mapState(['address','categorys','users']),
 
       categorysArr () {
         const {categorys} = this;
