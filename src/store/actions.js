@@ -9,7 +9,9 @@ import {
   RESET_USERS,
   RECEIVE_RATINGS,
   RECEIVE_INFO,
-  RECEIVE_GOODS
+  RECEIVE_GOODS,
+  ADD_FOOD_COUNT,
+  REDUCE_FOOD_COUNT
 } from './mutations-Types'
 import {reqAddress,reqFoodCategorys,reqShopsList,reqUserInfo,reqLogout,reqShopInfo,reqShopGoods,reqShopRatings} from '../api'
 
@@ -83,4 +85,15 @@ export default {
       typeof cb === 'function' && cb()
     }
   },
+
+  //定义更新count的同步actions
+  updataFoodCount ({commit},{food,isAdd}) {
+    if (isAdd){
+      //加
+      commit(ADD_FOOD_COUNT,{food})
+    } else {
+      //减
+      commit(REDUCE_FOOD_COUNT,{food})
+    }
+  }
 }

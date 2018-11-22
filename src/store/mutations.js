@@ -1,6 +1,7 @@
 /*
   包含n个直接更新状态的数据
  */
+import Vue from 'vue'
 import {
   RECEIVE_ADDRESS,
   RECEIVE_CATEGORYS,
@@ -9,7 +10,9 @@ import {
   RESET_USERS,
   RECEIVE_GOODS,
   RECEIVE_INFO,
-  RECEIVE_RATINGS
+  RECEIVE_RATINGS,
+  REDUCE_FOOD_COUNT,
+  ADD_FOOD_COUNT
 } from './mutations-Types'
 
 export default {
@@ -36,5 +39,24 @@ export default {
   },
   [RECEIVE_GOODS](state, {goods}) {
     state.goods = goods
+  },
+
+  [ADD_FOOD_COUNT] (state,{food}) {
+    if (food.count){
+      food.count++
+    } else {
+      //food.count = 1 // 没有数据绑定==> 不会更新界面
+      Vue.set(food,'count',1)
+      state.shopCart.push(food)
+    }
+  },
+  [REDUCE_FOOD_COUNT] (state,{food}) {
+    if (food.count){
+      food.count--;
+      if (food.count === 0){
+        // 一旦减为0时, 从购物车中删除food
+        state.shopCart.splice(state.shopCart.indexOf(food),1)
+      }
+    }
   },
 }

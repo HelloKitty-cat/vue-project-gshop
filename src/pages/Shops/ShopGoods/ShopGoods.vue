@@ -36,7 +36,7 @@
                     <span class="now">￥{{food.price}}</span>
                   </div>
                   <div class="cartcontrol-wrapper">
-                    CartControl组件
+                    <CartControl :food="food"/>
                   </div>
                 </div>
               </li>
@@ -44,6 +44,8 @@
           </li>
         </ul>
       </div>
+
+      <ShopCart />
     </div>
   </div>
 </template>
@@ -51,6 +53,8 @@
 <script>
   import {mapState} from 'vuex'
   import BScroll from 'better-scroll'
+  import CartControl from '../../../components/CartControl/CartControl'
+  import ShopCart from '../../../components/ShopCart/ShopCart'
   export default {
     data () {
       return {
@@ -83,7 +87,6 @@
           this.index = index
           this.leftScroll.scrollToElement(this.$refs.LeftUl.children[index],200)  //移动到第一个li上，在可视区域内
         }
-
         return index;
       }
     },
@@ -144,6 +147,10 @@
         //让右侧列表平滑到目标位置
         this.rightScroll.scrollTo(0,y,200)
       }
+    },
+    components: {
+      CartControl,
+      ShopCart
     }
   }
 </script>
