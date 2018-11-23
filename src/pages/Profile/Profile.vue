@@ -42,7 +42,7 @@
       </section>
       <section class="profile_my_order border-1px">
         <!-- 我的订单 -->
-        <a href='javascript:' class="my_order">
+        <a href='javascript:' class="my_order" @click="$router.push('/info')">
             <span>
               <i class="iconfont icon-order-s"></i>
             </span>

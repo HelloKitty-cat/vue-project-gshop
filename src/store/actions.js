@@ -11,7 +11,8 @@ import {
   RECEIVE_INFO,
   RECEIVE_GOODS,
   ADD_FOOD_COUNT,
-  REDUCE_FOOD_COUNT
+  REDUCE_FOOD_COUNT,
+  CLEAR_CART
 } from './mutations-Types'
 import {reqAddress,reqFoodCategorys,reqShopsList,reqUserInfo,reqLogout,reqShopInfo,reqShopGoods,reqShopRatings} from '../api'
 
@@ -95,5 +96,10 @@ export default {
       //减
       commit(REDUCE_FOOD_COUNT,{food})
     }
+  },
+
+  //清空购物车的同步actions
+  clearCart ({commit}) {
+    commit(CLEAR_CART)
   }
 }

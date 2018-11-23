@@ -18,10 +18,10 @@
       <!--右侧列表-->
       <div class="foods-wrapper">
         <ul ref="RightUl">
-          <li class="food-list-hook" v-for="(good,index) in goods" :key="index">
+          <li class="food-list-hook" v-for="(good,index) in goods" :key="index" >
             <h1 class="title">{{good.name}}</h1>
             <ul>
-              <li class="food-item bottom-border-1px" v-for="(food,index) in good.foods" :key="index">
+              <li class="food-item bottom-border-1px" v-for="(food,index) in good.foods" @click="showFood(food)" :key="index">
                 <div class="icon">
                   <img width="57" height="57"
                        :src="food.icon">
@@ -47,6 +47,7 @@
 
       <ShopCart />
     </div>
+    <Food :food="food" ref="food"/>
   </div>
 </template>
 
@@ -55,11 +56,13 @@
   import BScroll from 'better-scroll'
   import CartControl from '../../../components/CartControl/CartControl'
   import ShopCart from '../../../components/ShopCart/ShopCart'
+  import Food from '../../../components/Food/Food'
   export default {
     data () {
       return {
         scrollY: 0, // 右侧列表y轴方向滑动的位置
-        tops: [], //右侧所有分类li标签的高度
+        tops: [], // 右侧所有分类li标签的高度
+        food: {}  // 点击li要显示的食物列表
       }
     },
     computed: {
@@ -146,11 +149,18 @@
         this.scrollY = -y
         //让右侧列表平滑到目标位置
         this.rightScroll.scrollTo(0,y,200)
+      },
+
+      showFood (food) {
+        this.food = food;
+
+        this.$refs.food.toggleShow();
       }
     },
     components: {
       CartControl,
-      ShopCart
+      ShopCart,
+      Food
     }
   }
 </script>

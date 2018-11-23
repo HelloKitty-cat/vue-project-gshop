@@ -12,7 +12,8 @@ import {
   RECEIVE_INFO,
   RECEIVE_RATINGS,
   REDUCE_FOOD_COUNT,
-  ADD_FOOD_COUNT
+  ADD_FOOD_COUNT,
+  CLEAR_CART
 } from './mutations-Types'
 
 export default {
@@ -59,4 +60,10 @@ export default {
       }
     }
   },
+  [CLEAR_CART] (state) {
+    // 清空food中的 count
+    state.shopCart.forEach(food => food.count = 0)
+    // 清空shopCart中的数组
+    state.shopCart = []
+  }
 }

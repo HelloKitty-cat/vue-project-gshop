@@ -19,10 +19,10 @@
         </div>
       </div>
       <transition name="move">
-        <div class="shopcart-list" v-show="isShow">
+        <div class="shopcart-list" v-show="isShowCart">
           <div class="list-header">
             <h1 class="title">购物车</h1>
-            <span class="empty">清空</span>
+            <span class="empty" @click="clearCart">清空</span>
           </div>
           <div class="list-content">
             <ul>
@@ -38,13 +38,18 @@
         </div>
       </transition>
     </div>
-    <div class="list-mask" v-show="isShow" @click="isShowList"></div>
+   <transition name="fade">
+     <div class="list-mask" v-show="isShowCart" @click="isShowList"></div>
+   </transition>
   </div>
 </template>
 
 <script>
   import {mapState,mapGetters} from 'vuex'
   import CartControl from '../CartControl/CartControl'
+  import {MessageBox} from 'mint-ui'
+  import BScroll from 'better-scroll'
+  import actions from "../../store/actions";
   export default {
     data () {
       return {
@@ -58,6 +63,7 @@
       payClass () {
          const {totolPrice} = this;
          const {minPrice} = this.info;
+         if (!minPrice) return '';
         //总价格小于最小起送价格
          return minPrice > totolPrice ?  'not-enough' : 'enough'
       },
@@ -66,6 +72,8 @@
         const {totolPrice} = this;
         const {minPrice} = this.info;
 
+        if (!minPrice) return '';
+
         if (totolPrice === 0){
           return `￥${minPrice}元起送`
         }else if (totolPrice < minPrice){
@@ -73,11 +81,42 @@
         } else {
           return '去结算'
         }
+      },
+
+      isShowCart () {
+        if (this.totolCount===0){
+          this.isShow = false
+          return false
+        }
+
+        if(this.isShow){
+          this.$nextTick(() =>{
+            if (!this.scroll){
+              this.scroll = new BScroll('.list-content',{
+                click: true
+              })
+            }else {
+              this.scroll.refresh()
+            }
+          })
+        }
+        return this.isShow
       }
     },
     methods: {
       isShowList () {
-        this.isShow = !this.isShow
+        if (this.totolCount > 0) {
+          this.isShow = !this.isShow
+        }
+      },
+      // 清空购物车
+      clearCart () {
+        MessageBox.confirm('确定清空购物车吗?')
+          .then(
+            actions => {this.$store.dispatch('clearCart')},
+            actions => {}
+            )
+
       }
     },
     components: {
@@ -238,7 +277,7 @@
     opacity: 1
     background: rgba(7, 17, 27, 0.6)
     &.fade-enter-active, &.fade-leave-active
-      transition: all 0.5s
+      transition: opacity 0.5s
     &.fade-enter, &.fade-leave-to
       opacity: 0
 </style>

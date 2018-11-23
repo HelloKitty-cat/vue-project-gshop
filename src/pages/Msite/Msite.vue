@@ -1,44 +1,43 @@
 <template>
-  <div>
-    <section class="msite">
-      <!--首页头部-->
-      <MainHeader :title="address.name">
-        <span class="header_search" slot="left">
+  <div class="msite">
+    <MainHeader :title="address.name">
+        <span class="header_search" slot="left" @click="$router.replace('/search')">
           <i class="iconfont icon-sousuo"></i>
         </span>
-        <span class="header_login" slot="right" v-show="!users._id">
+      <span class="header_login" slot="right" v-show="!users._id">
           <span class="header_login_text">登录|注册</span>
         </span>
-      </MainHeader>
-      <!--首页导航-->
-      <nav class="msite_nav">
-        <div class="swiper-container" v-if="categorys.length">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="(categorys,index) in categorysArr" :key="index">
-              <a href="javascript:" class="link_to_food" v-for="(category,index) in categorys" :key="index">
-                <div class="food_container">
-                  <img :src="'https://fuss10.elemecdn.com' + category.image_url">
-                </div>
-                <span>{{category.title}}</span>
-              </a>
+    </MainHeader>
+    <div class="miste-content-wrapper">
+      <div class="miste-content">
+        <!--首页导航-->
+        <nav class="msite_nav border-1px">
+          <div class="swiper-container" v-if="categorys.length">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide" v-for="(categorys,index) in categorysArr" :key="index">
+                <a href="javascript:" class="link_to_food" v-for="(category,index) in categorys" :key="index">
+                  <div class="food_container">
+                    <img :src="'https://fuss10.elemecdn.com' + category.image_url"">
+                  </div>
+                  <span>{{category.title}}</span>
+                </a>
+              </div>
             </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
           </div>
-          <!-- Add Pagination -->z
-          <div class="swiper-pagination"></div>
-        </div>
-        <div v-else>
           <img src="./images/msite_back.svg" alt="loading">
+        </nav>
+        <!--首页附近商家-->
+        <div class="msite_shop_list border-1px">
+          <div class="shop_header">
+            <i class="iconfont icon-xuanxiang"></i>
+            <span class="shop_header_title">附近商家</span>
+          </div>
+          <ShopList />
         </div>
-      </nav>
-      <!--首页附近商家-->
-      <div class="msite_shop_list">
-        <div class="shop_header">
-        <i class="iconfont icon-xuanxiang"></i>
-        <span class="shop_header_title">附近商家</span>
       </div>
-        <ShopList />
-      </div>
-    </section>
+    </div>
   </div>
 </template>
 
@@ -47,12 +46,13 @@
   import Swiper from 'swiper'
   import 'swiper/dist/css/swiper.min.css'
   import {mapState} from 'vuex'
-
+  import Bscroll from 'better-scroll'
   export default {
     mounted () {
       //获取我的categorys和shops
       this.$store.dispatch('getFoodCategorys')
       this.$store.dispatch('getShops')
+
     },
     computed: {
       ...mapState(['address','categorys','users']),
@@ -93,6 +93,7 @@
               el: '.swiper-pagination',
             }
           })
+          new Bscroll('.miste-content-wrapper',{click: true})
         })
       }
      },
@@ -104,11 +105,16 @@
 
 <style lang="stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/mixins.styl"
-  .msite  //首页
+  .msite
     width 100%
+    height: 100%
+    .miste-content-wrapper
+      position fixed
+      top: 45px
+      bottom: 46px
+      width: 100%
     .msite_nav
       bottom-border-1px(#e4e4e4)
-      margin-top 45px
       height 200px
       background #fff
       .swiper-container
@@ -148,7 +154,7 @@
       margin-top 10px
       background #fff
       .shop_header
-        padding 10px 10px 0
+        padding 10px 10px 0 10px
         .shop_icon
           margin-left 5px
           color #999

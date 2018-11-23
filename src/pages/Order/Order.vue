@@ -4,15 +4,20 @@
       <MainHeader title="订单列表"/>
       <section class="order_no_login">
         <img src="./images/person.png">
-        <h3>登录后查看外卖订单</h3>
-        <button>立即登陆</button>
+        <h3>{{ users._id ? '暂无外卖订单' : '登录后查看外卖订单'}}</h3>
+        <button @click="$router.push('/login')" v-if="!users._id">立即登陆</button>
       </section>
     </section>
   </div>
 </template>
 
 <script>
-  export default {}
+  import {mapState} from 'vuex'
+  export default {
+    computed: {
+      ...mapState(['users'])
+    }
+  }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
