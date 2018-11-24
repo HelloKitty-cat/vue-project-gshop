@@ -49,7 +49,6 @@
   import CartControl from '../CartControl/CartControl'
   import {MessageBox} from 'mint-ui'
   import BScroll from 'better-scroll'
-  import actions from "../../store/actions";
   export default {
     data () {
       return {
@@ -84,6 +83,7 @@
       },
 
       isShowCart () {
+
         if (this.totolCount===0){
           this.isShow = false
           return false
@@ -116,7 +116,6 @@
             actions => {this.$store.dispatch('clearCart')},
             actions => {}
             )
-
       }
     },
     components: {
